@@ -5,7 +5,7 @@
 */
 Particle::Particle(double x, double y) : position{x, y} {
     velocity = random2D(); // Get a random 2D vector by calling the random2D() function
-    double speed = random(2.0, 6.0); // Get a random speed by calling the random() function
+    double speed = random(1.0, 3.0); // Get a random speed by calling the random() function
     velocity[0] *= speed; // Multiply the x component of the velocity by the speed for particle's movement
     velocity[1] *= speed; // Multiply the y component of the velocity by the speed for particle's movement
     mass = random(2.0, 6.0); // Get a random mass by calling the random() function
@@ -155,4 +155,20 @@ void Particle::draw(sf::RenderWindow& window) {
     circle.setFillColor(sf::Color::White); // Set the fill color of the circle to white
     circle.setPosition(position[0] - radius, position[1] - radius); // Set the position of the circle to the position of the particle
     window.draw(circle); // Draw the circle on the window
+}
+
+/*
+    Get the kinetic energy of the particle
+*/
+double Particle::kineticEnergy () {
+    return 0.5 * mass * (velocity[0] * velocity[0] + velocity[1] * velocity[1]);
+}
+
+/*
+    Get the momentum of the particle
+*/
+double Particle::momentum () {
+    std::array<double, 2> momentum = {mass * velocity[0], mass * velocity[1]};
+    
+    return std::hypot(momentum[0], momentum[1]);
 }
