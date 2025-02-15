@@ -18,7 +18,6 @@ class Particle {
     public:
         std::array<double, 2> position; // x, y
         std::array<double, 2> velocity; // x, y
-        std::array<double, 2> acceleration{0.0, 0.0}; // x, y
         double mass; // mass of the particle
         double radius; // radius of the particle
 
@@ -29,13 +28,10 @@ class Particle {
         */
         static double random(double min, double max);
         static std::array<double, 2> random2D();
-        void applyForce(const std::array<double, 2>& force);
         void update();
         void collide(Particle& other);
         void edges(double width, double height);
         void draw(sf::RenderWindow& window);
-        double kineticEnergy();
-        double momentum();
 };
 
 #endif // ELASTIC_COLLISIONS_H

@@ -1,0 +1,3 @@
+/home/ggulteki/projects/elastic-collisions/build/CMakeFiles/elastic-collisions.dir
+/home/ggulteki/projects/elastic-collisions/build/CMakeFiles/edit_cache.dir
+/home/ggulteki/projects/elastic-collisions/build/CMakeFiles/rebuild_cache.dir
