@@ -36,16 +36,9 @@ std::array<double, 2> Particle::random2D() {
 }
 
 /*
-    Update the particle's position and velocity based on current acceleration
-    Formulas:
-    x = x0 + v * dt and where x is the final position, x0 is the initial position, v is the velocity, and dt is the time
-    v = u + at and where u is the initial velocity, v is the final velocity, a is the acceleration, t is the time
-    For simplification, we can assume dt = 1
+    Update the particle position based their current velocity vector.
 */
 void Particle::update() {
-    /*
-    Usage of the x = x0 + v:
-    */
     position[0] += velocity[0]; // Add the x component of the velocity to the x component of the position
     position[1] += velocity[1]; // Add the y component of the velocity to the y component of the position
 }
@@ -56,7 +49,9 @@ static std::array<double, 2> setMag(const std::array<double, 2> &vec, double mag
         return {0, 0}; // Avoid division by zero
     return {(vec[0] / length) * magnitude, (vec[1] / length) * magnitude};
 }
-
+/*
+    Collide handle between two particles
+*/
 void Particle::collide(Particle &other) {
 
     std::array<double, 2> impactVector = {other.position[0] - position[0], other.position[1] - position[1]};
@@ -66,10 +61,6 @@ void Particle::collide(Particle &other) {
     if (distance < radius + other.radius) {
         double beforeTotalKinetic = 0.5 * mass * (velocity[0] * velocity[0] + velocity[1] * velocity[1]) +
                                     0.5 * other.mass * (other.velocity[0] * other.velocity[0] + other.velocity[1] * other.velocity[1]);
-
-        double beforeTotalMomentumX = mass * velocity[0] + other.mass * other.velocity[0];
-        double beforeTotalMomentumY = mass * velocity[1] + other.mass * other.velocity[1];
-        double beforeTotalMomentum = hypot(beforeTotalMomentumX, beforeTotalMomentumY);
 
         double overlap = (radius + other.radius - distance);
         std::array<double, 2> direction = {impactVector[0] / distance, impactVector[1] / distance};
@@ -118,27 +109,36 @@ void Particle::collide(Particle &other) {
         double afterTotalMomentumY = mass * velocity[1] + other.mass * other.velocity[1];
         double afterTotalMomentum = hypot(afterTotalMomentumX, afterTotalMomentumY);
 
-        system("clear");
-        std::cout << "Before momentum: " << beforeTotalMomentum << ", " << "After momentum: " << afterTotalMomentum << ", " << "Before kinetic: " << beforeTotalKinetic << ", " << "After kinetic: " << afterTotalKinetic << std::endl;
+        std::cout << "Before kinetic: " << beforeTotalKinetic << ", " << "After kinetic: " << afterTotalKinetic << std::endl;
     }
 }
 
 /*
-Check if the particle is at the edges of the window and bounce it off the edges
+    Check if the particle is at the edges of the window and bounce it off the edges
 */
 void Particle::edges(double width, double height) {
-    if (position[0] > width - radius) { // Check if the particle is at the right edge of the window
-        position[0] = width - radius; // Set the x component of the position to the right edge of the window
-        velocity[0] *= -1; // Reverse the x component of the velocity for bouncing off the right edge of the window
-    } else if (position[0] < radius) { // Check if the particle is at the left edge of the window
-        position[0] = radius; // Set the x component of the position to the left edge of the window
-        velocity[0] *= -1; // Reverse the x component of the velocity for bouncing off the left edge of the window
-    } else if (position[1] > height - radius) { // Check if the particle is at the top edge of the window
-        position[1] = height - radius; // Set the y component of the position to the top edge of the window
-        velocity[1] *= -1; // Reverse the y component of the velocity for bouncing off the top edge of the window
-    } else if (position[1] < radius) { // Check if the particle is at the bottom edge of the window
-        position[1] = radius; // Set the y component of the position to the bottom edge of the window
-        velocity[1] *= -1; // Reverse the y component of the velocity for bouncing off the bottom edge of the window
+    // Right wall
+    if (position[0] > width - radius) {
+        position[0] = width - radius;
+        velocity[0] *= -1; // Invert x velocity
+    }
+
+    // Left wall
+    if (position[0] < radius) {
+        position[0] = radius;
+        velocity[0] *= -1; // Invert x velocity
+    }
+
+    // Bottom wall
+    if (position[1] > height - radius) {
+        position[1] = height - radius;
+        velocity[1] *= -1; // Invert y velocity
+    }
+
+    // Top wall
+    if (position[1] < radius) {
+        position[1] = radius;
+        velocity[1] *= -1; // Invert y velocity
     }
 }
 
