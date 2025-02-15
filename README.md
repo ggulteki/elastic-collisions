@@ -1,10 +1,12 @@
 # elastic-collisions
 
-An ideal elastic collision simulation in C++ visualized using the SFML library. Inspired by Daniel Shiffman's coding challenge questioning why we need physics libraries. You can watch his YouTube video [here](https://www.youtube.com/watch?v=dJNFPv9Mj-Y&t=886s).
+![Elastic Collision Simulation](./resources/collision.gif)
+
+A particle collision simulation in C++ where particles collide elastically visualized using the SFML library. Inspired by Daniel Shiffman's coding challenge questioning why we need physics libraries. You can watch his YouTube video [here](https://www.youtube.com/watch?v=dJNFPv9Mj-Y&t=886s).
 
 ## Concept:
 
-In physics, the total kinetic energy and momentum of both masses are conserved after a collision. More detailed explanations can be found [here](https://en.wikipedia.org/wiki/Elastic_collision).
+In physics, the total kinetic energy of particles will be conserved after a collision. More detailed explanations can be found [here](https://en.wikipedia.org/wiki/Elastic_collision).
 
 ## Usage:
 
